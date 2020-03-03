@@ -36,6 +36,7 @@ module.exports = {
         path: `${__dirname}/src/pages/docs/`,
       },
     },
+    `gatsby-transformer-remark`,
     {
       resolve: `gatsby-plugin-styled-components`,
       options: {

@@ -17,6 +17,11 @@ const Container = styled.div`
     font-size: 20px;
   }
 
+  strong {
+    align-self: flex-start;
+    color: #7159c1;
+  }
+
   .files-container {
     width: 100%;
     display: grid;
@@ -39,6 +44,36 @@ const Container = styled.div`
     color: ${props => props.theme.textColor};
     border-radius: 3px;
   }
+
+  .markdown-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 25px 0px;
+    padding: 0px 25px;
+  }
+
+  .markdown-content {
+    width: 100%;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    background: ${props => props.theme.headerColor};
+    color: ${props => props.theme.textColor};
+    border-radius: 3px;
+
+    font-family: serif;
+
+    h2 {
+      font-size: 25px;
+    }
+
+    p {
+      margin: 10px 0px;
+      font-size: 18px;
+    }
+  }
 `
 
 export default ({ data }) => {
@@ -53,6 +88,16 @@ export default ({ data }) => {
                 <span>Extension: {file.node.extension}</span>
               </article>
             )) }
+          </section>
+          <h1>Markdown Transformed</h1>
+          <strong>Total: {data.allMarkdownRemark.totalCount}</strong>
+          <section className="markdown-container">
+              { data.allMarkdownRemark.edges.map(md => (
+                <article key={md.node.id} className="markdown-content">
+                  <h2>{md.node.frontmatter.title}</h2>
+                  <p>{md.node.excerpt}</p>
+                </article>
+              )) }
           </section>
         </Container>
       </Layout>
@@ -73,6 +118,19 @@ export const query = graphql`
           extension
         }
       }
+    }
+    allMarkdownRemark {
+      edges {
+        node {
+          id
+          html
+          frontmatter {
+            title
+          }
+          excerpt
+        }
+      }
+      totalCount
     }
     site {
       siteMetadata {
