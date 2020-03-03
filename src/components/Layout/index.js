@@ -5,7 +5,7 @@ import { ThemeProvider } from 'styled-components';
 import { Switch } from '@material-ui/core';
 import { Container, GlobalStyle } from './styles';
 
-export default ({ theme, title, children }) => {
+export default ({ title, children }) => {
     const data = useStaticQuery(
         graphql`
             query {
@@ -30,7 +30,7 @@ export default ({ theme, title, children }) => {
     )
 
     const { light, dark } = data.site.siteMetadata.theme;
-    
+
     const [currentTheme, setCurrentTheme] = useState('light');
     const handlerChangeCurrentTheme = useCallback(() => {
         currentTheme === 'light' 
