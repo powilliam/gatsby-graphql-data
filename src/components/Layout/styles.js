@@ -12,8 +12,11 @@ export const Container = styled.div`
 
     overflow: unset;
 
-    h1 {
+    #title {
         color: ${props => props.theme.textColor};
+        text-decoration: none;
+        font-size: 18px;
+        font-weight: bold;
     }
 
     header {
@@ -42,6 +45,6 @@ export const GlobalStyle = createGlobalStyle`
 
     body {
         width: 100%;
-        height: 100vh;
+        height: 100%;
     }
 `

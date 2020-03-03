@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useCallback } from 'react';
-import { useStaticQuery, graphql } from 'gatsby';
-import { ThemeProvider, ThemeConsumer } from 'styled-components';
+import { useStaticQuery, graphql, Link } from 'gatsby';
+import { ThemeProvider } from 'styled-components';
 
 import { Switch } from '@material-ui/core';
 import { Container, GlobalStyle } from './styles';
@@ -48,7 +48,7 @@ export default ({ aside, children }) => {
             <GlobalStyle />
             <Container>
                 <header>
-                    <h1>{memoizedSiteTitle}</h1>
+                    <Link id="title">{memoizedSiteTitle}</Link>
                     <Switch
                         checked={memoizedSwitcherChecked}
                         onChange={handlerChangeCurrentTheme}

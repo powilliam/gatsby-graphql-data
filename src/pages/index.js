@@ -2,8 +2,74 @@ import React from "react";
 import { graphql, Link } from 'gatsby';
 
 import styled from 'styled-components';
-
 import Layout from '../components/Layout';
+
+export default ({ data }) => {
+  return (
+      <Layout>
+        <Container>
+          <h1>Files found with graphql</h1>
+          <section className="files-container">
+            { data.allFile.edges.map(file => (
+              <article key={file.node.id} className="file-container">
+                <strong>Filename: {file.node.name}</strong>
+                <span>Extension: {file.node.extension}</span>
+              </article>
+            )) }
+          </section>
+          <h1>Posts</h1>
+          <strong>Total: {data.allMarkdownRemark.totalCount}</strong>
+          <section className="markdown-container">
+              { data.allMarkdownRemark.edges.map(md => (
+                <article key={md.node.id} className="markdown-content">
+                  <Link id="link" to={md.node.fields.slug}>{md.node.frontmatter.title}</Link>
+                  <p>{md.node.excerpt}</p>
+                </article>
+              )) }
+          </section>
+        </Container>
+      </Layout>
+  )
+}
+
+
+// GraphQL queries just should work inside Pages Components
+// To use inside Non-Page Components, try useStaticQuery API
+
+export const query = graphql`
+  query {
+    allFile {
+      edges {
+        node {
+          id
+          name
+          extension
+        }
+      }
+    }
+    allMarkdownRemark {
+      edges {
+        node {
+          fields {
+            slug
+          }
+          id
+          html
+          frontmatter {
+            title
+          }
+          excerpt
+        }
+      }
+      totalCount
+    }
+    site {
+      siteMetadata {
+        title
+      }
+    }
+  }
+`
 
 const Container = styled.div`
   display: flex;
@@ -43,6 +109,10 @@ const Container = styled.div`
     background: ${props => props.theme.headerColor};
     color: ${props => props.theme.textColor};
     border-radius: 3px;
+
+    strong {
+      color: ${props => props.theme.textColor};
+    }
   }
 
   .markdown-container {
@@ -65,77 +135,16 @@ const Container = styled.div`
 
     font-family: serif;
 
-    h2 {
+    #link {
+      color: ${props => props.theme.textColor};
       font-size: 25px;
+      font-weight: bold;
+      text-decoration: #7159c1;
     }
 
     p {
       margin: 10px 0px;
       font-size: 18px;
-    }
-  }
-`
-
-export default ({ data }) => {
-  return (
-      <Layout>
-        <Container>
-          <h1>Files found with graphql</h1>
-          <section className="files-container">
-            { data.allFile.edges.map(file => (
-              <article key={file.node.id} className="file-container">
-                <strong>Filename: {file.node.name}</strong>
-                <span>Extension: {file.node.extension}</span>
-              </article>
-            )) }
-          </section>
-          <h1>Markdown Transformed</h1>
-          <strong>Total: {data.allMarkdownRemark.totalCount}</strong>
-          <section className="markdown-container">
-              { data.allMarkdownRemark.edges.map(md => (
-                <article key={md.node.id} className="markdown-content">
-                  <h2>{md.node.frontmatter.title}</h2>
-                  <p>{md.node.excerpt}</p>
-                </article>
-              )) }
-          </section>
-        </Container>
-      </Layout>
-  )
-}
-
-
-// GraphQL queries just should work inside Pages Components
-// To use inside Non-Page Components, try useStaticQuery API
-
-export const query = graphql`
-  query {
-    allFile {
-      edges {
-        node {
-          id
-          name
-          extension
-        }
-      }
-    }
-    allMarkdownRemark {
-      edges {
-        node {
-          id
-          html
-          frontmatter {
-            title
-          }
-          excerpt
-        }
-      }
-      totalCount
-    }
-    site {
-      siteMetadata {
-        title
-      }
     }
   }
 `
