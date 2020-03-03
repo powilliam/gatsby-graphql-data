@@ -10,6 +10,8 @@ export const Container = styled.div`
     display: flex;
     flex-direction: column;
 
+    overflow: unset;
+
     h1 {
         color: ${props => props.theme.textColor};
     }
@@ -27,23 +29,6 @@ export const Container = styled.div`
 
         h1 {
             font-size: 20px;
-        }
-    }
-
-    main {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        padding: 100px 40px;
-
-        h1 {
-            color: #7159c1;
-            margin-bottom: 40px;
-        }
-
-        p {
-            color: ${props => props.theme.textColor};
-            margin: 5px 0px;
         }
     }
 `

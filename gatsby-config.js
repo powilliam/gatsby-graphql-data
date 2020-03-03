@@ -21,6 +21,21 @@ module.exports = {
     }
   },
   plugins: [
+    `gatsby-plugin-react-helmet`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `pages`,
+        path: `${__dirname}/src/pages/`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `docs`,
+        path: `${__dirname}/src/pages/docs/`,
+      },
+    },
     {
       resolve: `gatsby-plugin-styled-components`,
       options: {
